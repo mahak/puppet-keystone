@@ -15,6 +15,7 @@ describe 'keystone::db' do
         :retry_interval          => '<SERVICE DEFAULT>',
         :max_overflow            => '<SERVICE DEFAULT>',
         :pool_timeout            => '<SERVICE DEFAULT>',
+        :connection_parameters   => '<SERVICE DEFAULT>',
         :mysql_enable_ndb        => nil,
       )}
     end
@@ -32,6 +33,7 @@ describe 'keystone::db' do
           :database_pool_timeout            => '21',
           :mysql_enable_ndb                 => true,
           :database_retry_interval          => '11',
+          :connection_parameters            => { 'ssl' => true, 'ssl_ca' => '/etc/ca.pem' },
         }
       end
 
@@ -47,6 +49,7 @@ describe 'keystone::db' do
         :retry_interval          => '11',
         :max_overflow            => '21',
         :pool_timeout            => '21',
+        :connection_parameters   => { 'ssl' => true, 'ssl_ca' => '/etc/ca.pem' },
         :mysql_enable_ndb        => true,
       )}
     end

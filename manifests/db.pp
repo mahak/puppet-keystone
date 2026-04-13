@@ -42,6 +42,11 @@
 #   (Optional) If set, use this value for pool_timeout with SQLAlchemy.
 #   Defaults to $facts['os_service_default']
 #
+# [*connection_parameters*]
+#   (Optional) URL parameters to append to the database connection
+#   URL at connect time
+#   Defaults to $facts['os_service_default']
+#
 # DEPRECATED PARAMETERS
 #
 # [*mysql_enable_ndb*]
@@ -50,17 +55,18 @@
 #   Defaults to undef]
 #
 class keystone::db (
-  $database_db_max_retries          = $facts['os_service_default'],
-  $database_connection              = 'sqlite:////var/lib/keystone/keystone.sqlite',
-  $database_slave_connection        = $facts['os_service_default'],
-  $database_connection_recycle_time = $facts['os_service_default'],
-  $database_max_pool_size           = $facts['os_service_default'],
-  $database_max_retries             = $facts['os_service_default'],
-  $database_retry_interval          = $facts['os_service_default'],
-  $database_max_overflow            = $facts['os_service_default'],
-  $database_pool_timeout            = $facts['os_service_default'],
+  $database_db_max_retries                                   = $facts['os_service_default'],
+  $database_connection                                       = 'sqlite:////var/lib/keystone/keystone.sqlite',
+  $database_slave_connection                                 = $facts['os_service_default'],
+  $database_connection_recycle_time                          = $facts['os_service_default'],
+  $database_max_pool_size                                    = $facts['os_service_default'],
+  $database_max_retries                                      = $facts['os_service_default'],
+  $database_retry_interval                                   = $facts['os_service_default'],
+  $database_max_overflow                                     = $facts['os_service_default'],
+  $database_pool_timeout                                     = $facts['os_service_default'],
+  Optional[Oslo::Dbconn::Conn_params] $connection_parameters = $facts['os_service_default'],
   # DEPRECATED PARAMETERS
-  $mysql_enable_ndb                 = undef,
+  $mysql_enable_ndb                                          = undef,
 ) {
   include keystone::deps
 
@@ -75,6 +81,7 @@ class keystone::db (
     max_overflow            => $database_max_overflow,
     pool_timeout            => $database_pool_timeout,
     mysql_enable_ndb        => $mysql_enable_ndb,
+    connection_parameters   => $connection_parameters,
   }
 
   # all db settings should be applied and all packages should be installed
